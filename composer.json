@@ -1,0 +1,29 @@
+{
+    "name": "florinmatthew/find-file-content",
+    "type": "library",
+    "description": "Find file by content (tests).",
+    "keywords": [],
+    "homepage": "",
+    "license": "Test",
+    "authors": [
+        {
+            "name": "Florian Matthew",
+            "email": "florin.gligor@reea.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-4": { "Test\\FindFiles\\Searcher\\": "" }
+    },
+    "repositories": [
+        {
+            "packagist": false,
+            "type": "vcs",
+            "url": "https://github.com/florinmatthew/find-file-content.git"
+        }
+    ], 
+    "target-dir": "Reea/Components/FileSearcher",
+    "minimum-stability": "dev"
+}

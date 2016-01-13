@@ -17,5 +17,5 @@
     "autoload": {
         "psr-0": { "Test\\FindFiles\\Searcher\\": "" }
     }, 
-    "target-dir": "Reea/Components/FileSearcher"
+    "target-dir": "Reea/FileSearcher/Bundle"
 }

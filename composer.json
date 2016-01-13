@@ -16,13 +16,6 @@
     },
     "autoload": {
         "psr-4": { "Test\\FindFiles\\Searcher\\": "" }
-    },
-    "repositories": [
-        {
-            "packagist": false,
-            "type": "vcs",
-            "url": "https://github.com/florinmatthew/find-file-content.git"
-        }
-    ], 
+    }, 
     "target-dir": "Reea/Components/FileSearcher"
 }

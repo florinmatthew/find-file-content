@@ -23,6 +23,12 @@ interface DriverInterface {
      * Search
      * @param type $path
      */
-    public function search($path);
+    public function search();
+    
+    /**
+     * Append settings to driver
+     * @param array $settings
+     */
+    public function appendSettings(array $settings);
     
 }

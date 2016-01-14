@@ -16,22 +16,26 @@ use Reea\FileSearcher\Bundle\Helpers\SearchSettings;
  */
 class FindInFiles {
     /**
-     *
      * @var type 
      */
     protected $drivers = [];
     
     /**
-     *
      * @var type 
      */
     protected $walker;
     
-    protected $directories = [];
+    private $result;
     
-    protected $ignoredFiles = [];
+    /**
+     * @var String 
+     */
+    private $path;
     
-    protected $locations = [];
+    /**
+     * @var Array
+     */
+    private $textIncluded;
     
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
             
@@ -66,14 +70,45 @@ class FindInFiles {
     }
     
     /**
-     * 
+     * Make the driver
      * @param DriverInterface $driver
+     * @return DriverInterface
      */
     protected function makeDriver(DriverInterface $driver){
-        //build driver with settings
+        $newDriver = $driver->appendSettings($settings);
+        
+        return $newDriver;
     }
     
-    public function setSettings(array $settings){
-        SearchSettings::validate($settings);
+    /**
+     * 
+     * @param type $path
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setPath($path){
+        $this->path = $path;
+        
+        return $this;
     }
+    
+    /**
+     * 
+     * @param array $textIncluded
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setTextIncluded(array $textIncluded) {
+        $this->textIncluded = $textIncluded;
+        
+        return $this;
+    }
+
+
+    public function startSearch(){
+        echo 'search started';
+    }
+    
+    public function asJson(){
+        
+    }
+    
 }

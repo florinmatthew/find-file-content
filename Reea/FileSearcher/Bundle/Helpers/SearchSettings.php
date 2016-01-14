@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 namespace Reea\FileSearcher\Bundle\Helpers;
+use Reea\FileSearcher\Bundle\Exceptions\InvalidTermsException;
 /**
  * Description of SearchSettings
  *
@@ -41,11 +42,18 @@ class SearchSettings {
      * @throws Reea\FileSearcher\Bundle\Exceptions\InvalidTermsException
      */
     public static function validate(array $settings){
-        foreach ($settings as $key=>$val){
-            if(!self::$settings[$key]){
-                throw new Reea\FileSearcher\Bundle\Exceptions\InvalidTermsException();
+        
+        if(0 === count($settings))
+            throw new InvalidTermsException();
+        
+        foreach (self::$settings as $name=> $setting){
+            if($setting['required'] === true){
+                if(! array_key_exists($name, $settings)){
+                    throw new InvalidTermsException();
+                }
             }
-        }
+        }        
+                
 //        return self::$settings;
     }
     

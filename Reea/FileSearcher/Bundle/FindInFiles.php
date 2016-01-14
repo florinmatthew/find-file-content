@@ -44,12 +44,19 @@ class FindInFiles {
     
     private $sort;
     
+    private $filters = array();
+    
     private $ignoredFolders = array();
     
     /**
      * @var String 
      */
     private $matchRegex;
+    
+    /**
+     * @var bool 
+     */
+    private $skipUnreadable = TRUE;
     
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
             
@@ -93,7 +100,9 @@ class FindInFiles {
             'textExcluded'  => $this->textExcluded,
             'sort'          => $this->sort,
             'matches_regex' => $this->matchRegex,
-            'ignoredFolders'=> $this->ignoredFolders
+            'filters'       => $this->filters,
+            'ignoredFolders'=> $this->ignoredFolders,
+            'skipUnreadable'=> $this->skipUnreadable
         ];
         
         $newDriver = $driver->setPath($this->path)
@@ -154,11 +163,32 @@ class FindInFiles {
     
     /**
      * 
+     * @param array $filters
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setFilters(array $filters) {
+        $this->filters = $filters;
+        
+        return $this;
+    }
+
+    /**
+     * 
      * @param array $ignored
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
     public function setIgnoredFolders(array $ignored) {
         $this->ignoredFolders = $ignored;
+        
+        return $this;
+    }
+    
+    /**
+     * Include unreadable folders in search.
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function includeUnreadable(){
+        $this->skipUnreadable = false;
         
         return $this;
     }

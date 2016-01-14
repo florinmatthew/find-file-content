@@ -34,14 +34,22 @@ class SearchSettings {
             'type'  => 'array',
             'required' => true
         ],
+        'filters'   => [
+            'type'  => 'array',
+            'required' => false
+        ],
         'ignoreFolders' => [
             'type'  => 'array',
             'required' => false
+        ],
+        'skipUnreadable'=> [
+            'type'  => 'bool',
+            'required' => true
         ]
     ];
     
     /**
-     * 
+     * Validate search params.
      * @param array $settings
      * @throws Reea\FileSearcher\Bundle\Exceptions\InvalidTermsException
      */
@@ -59,6 +67,21 @@ class SearchSettings {
         }        
         
         return true;
+    }
+    
+    /**
+     * Remove empty search params.
+     * @param array $settings
+     * @return array
+     */
+    public static function removeEmpty(array $settings){
+        foreach ($settings as $key => $setting){
+            if(0 === count($setting)){
+                unset($settings[$key]);
+            }
+        }
+        
+        return $settings;
     }
     
 }

@@ -41,7 +41,7 @@ abstract class AbstractDriver {
      */
     public function appendSettings(array $settings){
         if(SearchSettings::validate($settings)){
-            $this->settings = $settings;
+            $this->settings = SearchSettings::removeEmpty($settings);
         }
         
         return $this;

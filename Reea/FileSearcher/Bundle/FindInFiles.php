@@ -36,8 +36,7 @@ class FindInFiles {
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
             
     function __construct() {
-        SearchSettings::validate(array());
-//        $this->appendDriver(new DefaultDriver());
+        $this->appendDriver(new DefaultDriver());
     }
     
     /**

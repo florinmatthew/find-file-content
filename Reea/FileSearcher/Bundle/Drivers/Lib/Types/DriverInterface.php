@@ -18,4 +18,6 @@ interface DriverInterface {
      */
     public function getId();
     
+    public function search($path);
+    
 }

@@ -14,10 +14,15 @@ namespace Reea\FileSearcher\Bundle\Drivers\Lib\Types;
 interface DriverInterface {
     
     /**
-     * Return the ID of the driver.
+     * Return the ID of the driver
+     * @return strign Driver name
      */
     public function getId();
     
+    /**
+     * Search
+     * @param type $path
+     */
     public function search($path);
     
 }

@@ -16,7 +16,17 @@ class DefaultDriver implements DriverInterface{
     
     static $name = "default";
     
+    /**
+     * {@inheritdoc}
+     */
     public function getId() {
         return static::$name;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function search($path) {
+        /*Search fucntionality to be implemented here*/;
     }
 }

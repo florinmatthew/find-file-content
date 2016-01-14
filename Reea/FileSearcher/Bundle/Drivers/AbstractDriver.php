@@ -23,7 +23,7 @@ abstract class AbstractDriver {
     /**
      * @var Array 
      */
-    protected $settings;
+    protected $settings = array();
     
     /**
      * Set search path.
@@ -31,7 +31,6 @@ abstract class AbstractDriver {
      * @return \Reea\FileSearcher\Bundle\Drivers\AbstractDriver
      */
     public function setPath($path){
-        
         $this->path = $path;
         
         return $this;
@@ -41,8 +40,19 @@ abstract class AbstractDriver {
      * Append search settings
      */
     public function appendSettings(array $settings){
-        SearchSettings::validate($settings);
+        if(SearchSettings::validate($settings)){
+            $this->settings = $settings;
+        }
         
+        return $this;
+    }
+    
+    /**
+     * Clear settings array.
+     */
+    public function clearSettings(){
+        unset($this->settings);
+        $this->settings = array();
     }
     
 }

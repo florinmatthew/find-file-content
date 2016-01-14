@@ -18,10 +18,6 @@ class SearchSettings {
      * @var array 
      */
     private static $settings = [
-        'path' => [
-            'type' => 'string',
-            'required' => true
-        ], 
         'textIncluded' => [
             'type' => 'array',
             'required' => true
@@ -33,6 +29,10 @@ class SearchSettings {
         'sort' => [
             'type' => 'string',
             'required' => false
+        ],
+        'matches_regex' => [
+            'type' => 'string',
+            'required' => true
         ]
     ];
     
@@ -48,13 +48,13 @@ class SearchSettings {
         
         foreach (self::$settings as $name=> $setting){
             if($setting['required'] === true){
-                if(! array_key_exists($name, $settings)){
+                if(! array_key_exists($name, $settings) || (array_key_exists($name, $settings) && NULL == $settings[$name])){
                     throw new InvalidTermsException();
                 }
             }
         }        
-                
-//        return self::$settings;
+        
+        return true;
     }
     
 }

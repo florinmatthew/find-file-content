@@ -35,7 +35,19 @@ class FindInFiles {
     /**
      * @var Array
      */
-    private $textIncluded;
+    private $textIncluded = array();
+    
+    /**
+     * @var Array
+     */
+    private $textExcluded = array();
+    
+    private $sort;
+    
+    /**
+     * @var String 
+     */
+    private $matchRegex;
     
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
             
@@ -49,7 +61,6 @@ class FindInFiles {
      * @return mixed
      */
     public function getDrivers($name = ""){
-        
         if("" != $name){
             return $this->drivers[$name];
         }else{
@@ -75,7 +86,15 @@ class FindInFiles {
      * @return DriverInterface
      */
     protected function makeDriver(DriverInterface $driver){
-        $newDriver = $driver->appendSettings($settings);
+        $settings = [
+            'textIncluded'  => $this->textIncluded,
+            'textExcluded'  => $this->textExcluded,
+            'sort'          => $this->sort,
+            'matches_regex' => $this->matchRegex
+        ];
+        
+        $newDriver = $driver->setPath($this->path)
+                ->appendSettings($settings);
         
         return $newDriver;
     }
@@ -92,7 +111,7 @@ class FindInFiles {
     }
     
     /**
-     * 
+     * Set text to be included. Give me all files where these texts are present.
      * @param array $textIncluded
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
@@ -101,10 +120,41 @@ class FindInFiles {
         
         return $this;
     }
+    
+    /**
+     * Set text to be excluded. (Give me all files where these texts are missing)
+     * @param array $textExcluded
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setTextExcluded(array $textExcluded) {
+        $this->textIncluded = $textExcluded;
+        
+        return $this;
+    }
+    
+    public function sortMethod($param) {
+        $this->sort = $param;
+        
+        return $this;
+    }
+
+    /**
+     * Path matches regex.
+     * @param String $regex
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setMatchesRegex($regex){
+        $this->matchRegex = $regex;
+        
+        return $this;
+    }
 
 
     public function startSearch(){
-        echo 'search started';
+        foreach ($this->drivers as $driver){
+            $newDriver = $this->makeDriver($driver);
+            $newDriver->search();
+        }
     }
     
     public function asJson(){

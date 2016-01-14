@@ -34,10 +34,6 @@ class SearchSettings {
             'type'  => 'array',
             'required' => true
         ],
-        'filters'   => [
-            'type'  => 'array',
-            'required' => false
-        ],
         'ignoreFolders' => [
             'type'  => 'array',
             'required' => false

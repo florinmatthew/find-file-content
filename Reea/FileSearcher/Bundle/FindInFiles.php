@@ -44,8 +44,6 @@ class FindInFiles {
     
     private $sort;
     
-    private $filters = array();
-    
     private $ignoredFolders = array();
     
     /**
@@ -95,7 +93,6 @@ class FindInFiles {
             'textExcluded'  => $this->textExcluded,
             'sort'          => $this->sort,
             'matches_regex' => $this->matchRegex,
-            'filters'       => $this->filters,
             'ignoredFolders'=> $this->ignoredFolders
         ];
         
@@ -155,17 +152,6 @@ class FindInFiles {
         return $this;
     }
     
-    /**
-     * 
-     * @param array $filters
-     * @return \Reea\FileSearcher\Bundle\FindInFiles
-     */
-    public function setFilters(array $filters) {
-        $this->filters = $filters;
-        
-        return $this;
-    }
-
     /**
      * 
      * @param array $ignored

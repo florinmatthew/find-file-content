@@ -44,6 +44,10 @@ class FindInFiles {
     
     private $sort;
     
+    private $filters = array();
+    
+    private $ignoredFolders = array();
+    
     /**
      * @var String 
      */
@@ -90,7 +94,9 @@ class FindInFiles {
             'textIncluded'  => $this->textIncluded,
             'textExcluded'  => $this->textExcluded,
             'sort'          => $this->sort,
-            'matches_regex' => $this->matchRegex
+            'matches_regex' => $this->matchRegex,
+            'filters'       => $this->filters,
+            'ignoredFolders'=> $this->ignoredFolders
         ];
         
         $newDriver = $driver->setPath($this->path)
@@ -148,7 +154,28 @@ class FindInFiles {
         
         return $this;
     }
+    
+    /**
+     * 
+     * @param array $filters
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setFilters(array $filters) {
+        $this->filters = $filters;
+        
+        return $this;
+    }
 
+    /**
+     * 
+     * @param array $ignored
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setIgnoredFolders(array $ignored) {
+        $this->ignoredFolders = $ignored;
+        
+        return $this;
+    }
 
     public function startSearch(){
         foreach ($this->drivers as $driver){

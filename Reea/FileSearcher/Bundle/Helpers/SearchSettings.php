@@ -19,20 +19,28 @@ class SearchSettings {
      */
     private static $settings = [
         'textIncluded' => [
-            'type' => 'array',
+            'type'  => 'array',
             'required' => true
         ], 
         'textExcluded' => [
-            'type' => 'array',
+            'type'  => 'array',
             'required' => false
         ],
         'sort' => [
-            'type' => 'string',
+            'type'  => 'string',
             'required' => false
         ],
         'matches_regex' => [
-            'type' => 'string',
+            'type'  => 'array',
             'required' => true
+        ],
+        'filters'   => [
+            'type'  => 'array',
+            'required' => false
+        ],
+        'ignoreFolders' => [
+            'type'  => 'array',
+            'required' => false
         ]
     ];
     
@@ -47,7 +55,7 @@ class SearchSettings {
             throw new InvalidTermsException();
         
         foreach (self::$settings as $name=> $setting){
-            if($setting['required'] === true){
+            if(TRUE === $setting['required']){
                 if(! array_key_exists($name, $settings) || (array_key_exists($name, $settings) && NULL == $settings[$name])){
                     throw new InvalidTermsException();
                 }

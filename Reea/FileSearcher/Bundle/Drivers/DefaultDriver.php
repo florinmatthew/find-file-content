@@ -27,11 +27,6 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
      * {@inheritdoc}
      */
     public function search() {
-        echo "<pre>";
-        echo $this->path."<br />";
-        var_dump($this->settings);
-        echo "</pre>";
-        die(__LINE__ . __FILE__);
         /*Search fucntionality to be implemented here*/;
     }
 }

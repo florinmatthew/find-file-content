@@ -14,7 +14,7 @@ use Reea\FileSearcher\Bundle\Drivers\Lib\Types\DriverInterface;
  */
 class DefaultDriver extends AbstractDriver implements DriverInterface{
     
-    static $name = "default";
+    private static $name = "default";
     
     /**
      * {@inheritdoc}
@@ -27,6 +27,12 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
      * {@inheritdoc}
      */
     public function search() {
+        echo "Start search";
+        echo "<pre>";
+        echo $this->path."<br />";
+        var_dump($this->settings);
+        echo "</pre>";
+        die(__LINE__ . __FILE__);
         /*Search fucntionality to be implemented here*/;
     }
 }

@@ -10,6 +10,7 @@ use Reea\FileSearcher\Bundle\Drivers\Lib\Types\DriverInterface;
 use Reea\FileSearcher\Bundle\Drivers\DefaultDriver;
 use Reea\FileSearcher\Bundle\Helpers\SortHelper;
 use Reea\FileSearcher\Bundle\Registry\Drivers;
+use Reea\FileSearcher\Bundle\Helpers\OSystem;
 /**
  * Description of FindFile
  *
@@ -224,7 +225,11 @@ class FindInFiles {
     public function startSearch(){
         foreach ($this->drivers as $driver){
             $newDriver = $this->makeDriver($driver);
-            $newDriver->search();
+            echo "<pre>";
+            var_dump($newDriver->search());
+            echo "</pre>";
+            die((__LINE__ -2) . __FILE__);
+            
         }
         /*...*/
     }

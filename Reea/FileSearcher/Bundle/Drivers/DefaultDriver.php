@@ -18,7 +18,7 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
     
     private static $name = "default";
     
-    private static $enabled = true;
+    private $enabled = true;
     
     /**
      * {@inheritdoc}
@@ -30,6 +30,10 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
             \RecursiveIteratorIterator::SELF_FIRST
         );
         
+        if(NULL !== $this->settings['textIncluded'] || NULL !== $this->settings['textExcluded']){
+            $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textExcluded'], $this->settings['textIncluded']);
+        }
+        
         return $iterator;
     }
     
@@ -40,7 +44,10 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
         return static::$name;
     }
     
+    /**
+     * {@inheritdoc}
+     */
     public function isEnabled(){
-        return self::$enabled;
+        return $this->enabled;
     }
 }

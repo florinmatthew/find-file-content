@@ -7,22 +7,28 @@
  */
 
 namespace Reea\FileSearcher\Bundle\Iterators;
-
+use FilterIterator;
 /**
  * Description of FileContentFilterIterator
  *
  * @author Florian Matthew <florin.gligor@reea.net>
  */
-class FileContentFilterIterator extends \FilterIterator{
+class FileContentFilterIterator extends FilterIterator{
     
     private $textIncluded = array();
     
     private $textExcluded = array();
     
-    function __construct(\Iterator $iterator, $excluded = array(), $included = array()) {
+    /**
+     * 
+     * @param \Iterator $iterator
+     * @param type $excluded
+     * @param type $included
+     */
+    function __construct(\Iterator $iterator, $included = array(), $excluded = array()) {
         parent::__construct($iterator);
-        $this->textIncluded = $excluded;
-        $this->textExcluded = $included;
+        $this->textIncluded = $included;
+        $this->textExcluded = $excluded;
     }
     
     public function accept() {
@@ -32,7 +38,7 @@ class FileContentFilterIterator extends \FilterIterator{
         }
         
         $file = $this->current();
-
+        
         if ($file->isDir() || !$file->isReadable()) {
             return false;
         }

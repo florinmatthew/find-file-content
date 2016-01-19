@@ -8,7 +8,8 @@
 namespace Reea\FileSearcher\Bundle;
 use Reea\FileSearcher\Bundle\Drivers\Lib\Types\DriverInterface;
 use Reea\FileSearcher\Bundle\Drivers\DefaultDriver;
-use Reea\FileSearcher\Bundle\Helpers\SearchSettings;
+use Reea\FileSearcher\Bundle\Helpers\SortHelper;
+use Reea\FileSearcher\Bundle\Registry\Drivers;
 /**
  * Description of FindFile
  *
@@ -25,6 +26,9 @@ class FindInFiles {
      */
     protected $walker;
     
+    /**
+     * @var type 
+     */
     private $result;
     
     /**
@@ -42,10 +46,19 @@ class FindInFiles {
      */
     private $textExcluded = array();
     
+    /**
+     * @var type 
+     */
     private $sort;
     
+    /**
+     * @var type 
+     */
     private $filters = array();
     
+    /**
+     * @var type 
+     */
     private $ignoredFolders = array();
     
     /**
@@ -56,12 +69,18 @@ class FindInFiles {
     /**
      * @var bool 
      */
-    private $skipUnreadable = TRUE;
+    private $skipUnreadable = 1;
     
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
-            
+
     function __construct() {
-        $this->appendDriver(new DefaultDriver());
+        /*Append registered drivers*/
+        $drivers = new Drivers();
+        $registered = $drivers->getEnabled();
+        
+        foreach ($registered as $driver){
+            $this->appendDriver($driver);
+        }
     }
     
     /**
@@ -75,7 +94,6 @@ class FindInFiles {
         }else{
             return $this->drivers;
         }
-        
     }
     
     /**
@@ -84,6 +102,10 @@ class FindInFiles {
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
     public function appendDriver(DriverInterface $driver){
+        
+        if(array_key_exists($driver->getId(), $this->drivers)){
+            throw new Reea\FileSearcher\Bundle\Exceptions\DuplicateDriverException();
+        }
         $this->drivers[$driver->getId()] = $driver;
         
         return $this;
@@ -95,10 +117,11 @@ class FindInFiles {
      * @return DriverInterface
      */
     protected function makeDriver(DriverInterface $driver){
+        
         $settings = [
             'textIncluded'  => $this->textIncluded,
             'textExcluded'  => $this->textExcluded,
-            'sort'          => $this->sort,
+            'sort'          => SortHelper::getSortVal($this->sort),
             'matches_regex' => $this->matchRegex,
             'filters'       => $this->filters,
             'ignoredFolders'=> $this->ignoredFolders,
@@ -144,7 +167,12 @@ class FindInFiles {
         return $this;
     }
     
-    public function sortMethod($param) {
+    /**
+     * 
+     * @param String $param Values: 'name', 'created', 'changed' .
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function sortBy($param) {
         $this->sort = $param;
         
         return $this;
@@ -187,8 +215,8 @@ class FindInFiles {
      * Include unreadable folders in search.
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
-    public function includeUnreadable(){
-        $this->skipUnreadable = false;
+    public function setUnreadable(){
+        $this->skipUnreadable = 0;
         
         return $this;
     }
@@ -198,10 +226,7 @@ class FindInFiles {
             $newDriver = $this->makeDriver($driver);
             $newDriver->search();
         }
-    }
-    
-    public function asJson(){
-        
+        /*...*/
     }
     
 }

@@ -26,9 +26,8 @@ interface DriverInterface {
     public function search();
     
     /**
-     * Append settings to driver
-     * @param array $settings
+     * Is driver enabled.
+     * @return bool Is enabled.
      */
-    public function appendSettings(array $settings);
-    
+    public function isEnabled();
 }

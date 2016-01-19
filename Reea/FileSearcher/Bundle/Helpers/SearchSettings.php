@@ -19,32 +19,22 @@ class SearchSettings {
      */
     private static $settings = [
         'textIncluded' => [
-            'type'  => 'array',
             'required' => true
         ], 
         'textExcluded' => [
-            'type'  => 'array',
             'required' => false
         ],
         'sort' => [
-            'type'  => 'string',
             'required' => false
         ],
-        'matches_regex' => [
-            'type'  => 'array',
-            'required' => true
-        ],
         'filters'   => [
-            'type'  => 'array',
             'required' => false
         ],
         'ignoreFolders' => [
-            'type'  => 'array',
             'required' => false
         ],
         'skipUnreadable'=> [
-            'type'  => 'bool',
-            'required' => true
+            'required' => false
         ]
     ];
     
@@ -55,12 +45,14 @@ class SearchSettings {
      */
     public static function validate(array $settings){
         
-        if(0 === count($settings))
+        if(0 === count($settings)){
             throw new InvalidTermsException();
-        
+        }
         foreach (self::$settings as $name=> $setting){
             if(TRUE === $setting['required']){
                 if(! array_key_exists($name, $settings) || (array_key_exists($name, $settings) && NULL == $settings[$name])){
+                    echo $name;
+                    die($settings[$name]);
                     throw new InvalidTermsException();
                 }
             }

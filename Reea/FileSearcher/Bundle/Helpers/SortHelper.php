@@ -24,56 +24,49 @@ class SortHelper {
     ];
     
     /**
-     * 
-     * @return Array [1 => 'name', 2 => 'size', 3 => 'created']
-     */
-    public static function getSorters(){
-        return static::$sorters;
-    }
-    
-    /**
      * Get sorter int value by name.
      * @param String $name
      * @return mixed
      */
-    public function getSorterVal($name){
+    public static function getSortVal($name){
         $sorter = array_flip(static::$sorters);
         
-        if(array_key_exists($name, $sorter)){
-            return $sorter[$name];
+        if(! array_key_exists($name, $sorter)){
+            throw new Reea\FileSearcher\Bundle\Exceptions\InvalidSortArgumentException();
+            
         }
         
-        return false;
+        return $sorter[$name];
     }
     
     /**
      * Get callable.
      * @param Int $id
-     * @return mixed
+     * @return mixed Return callable function. FALSE if callable does not exists
      */
     public static function getCallable($id){
         $method_name = "by" . ucfirst(static::$sorters[$id]);
         
-        if(method_exists($this, $method_name)){ 
-            return $method_name();
+        if(method_exists(self::class, $method_name)){ 
+            return self::{$method_name}();
         }
         
         return false;
     }
     
-    private function byName(){
+    private static function byName(){
         return function($a, $b){
             return strcmp($a->getRealpath(), $b->getRealpath());
         };
     }
     
-    private function byCreated(){
+    private static function byCreated(){
         return function($a, $b){
             return ($a->getATime() - $b->getATime());
         };
     }
     
-    private function byChanged(){
+    private static function byChanged(){
         return function($a, $b){
             return ($a->getCTime() - $b->getCTime());
         };

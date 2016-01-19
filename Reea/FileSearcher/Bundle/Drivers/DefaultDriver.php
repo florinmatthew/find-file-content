@@ -7,6 +7,8 @@
  */
 namespace Reea\FileSearcher\Bundle\Drivers;
 use Reea\FileSearcher\Bundle\Drivers\Lib\Types\DriverInterface;
+use Reea\FileSearcher\Bundle\Iterators as I;
+use Reea\FileSearcher\Bundle\Helpers\SortHelper;
 /**
  * Description of DefaultDriver
  *
@@ -16,6 +18,21 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
     
     private static $name = "default";
     
+    private static $enabled = true;
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function search() {
+        
+        $iterator = new \RecursiveIteratorIterator(
+            new I\RecursiveDirectoryIterator($this->path, $this->settings['skipUnreadable']),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+        
+        return $iterator;
+    }
+    
     /**
      * {@inheritdoc}
      */
@@ -23,16 +40,7 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
         return static::$name;
     }
     
-    /**
-     * {@inheritdoc}
-     */
-    public function search() {
-        echo "Start search";
-        echo "<pre>";
-        echo $this->path."<br />";
-        var_dump($this->settings);
-        echo "</pre>";
-        die(__LINE__ . __FILE__);
-        /*Search fucntionality to be implemented here*/;
+    public function isEnabled(){
+        return self::$enabled;
     }
 }

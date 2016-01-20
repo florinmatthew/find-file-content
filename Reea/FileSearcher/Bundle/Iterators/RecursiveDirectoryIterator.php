@@ -7,7 +7,7 @@
  */
 
 namespace Reea\FileSearcher\Bundle\Iterators;
-
+use \Reea\FileSearcher\Bundle\Helpers\FileInfo;
 /**
  * Description of RecursiveDirectoryIterator
  *
@@ -20,8 +20,8 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
     private $rewindable;
     
     function __construct($path, $skipUnreadable) {
-        parent::__construct($path, NULL);
         $this->skipUnreadable = $skipUnreadable;
+        parent::__construct($path, \RecursiveDirectoryIterator::SKIP_DOTS);
     }
     
     public function getChildren() {
@@ -42,9 +42,6 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
         }
     }
     
-    /**
-     * Do nothing for non rewindable stream.
-     */
     public function rewind(){
         if (false === $this->isRewindable()) {
             return;
@@ -54,11 +51,6 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
         parent::rewind();
     }
 
-    /**
-     * Checks if the stream is rewindable.
-     *
-     * @return bool true when the stream is rewindable, false otherwise
-     */
     public function isRewindable() {
         if (null !== $this->rewindable) {
             return $this->rewindable;
@@ -76,6 +68,11 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
         }
 
         return $this->rewindable = false;
+    }
+    
+    public function current() {
+        $FileInfo = new FileInfo(parent::current()->getPathname());
+        return $FileInfo;
     }
     
 }

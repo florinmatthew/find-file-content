@@ -7,13 +7,13 @@
  */
 
 namespace Reea\FileSearcher\Bundle\Iterators;
-use FilterIterator;
+
 /**
  * Description of FileContentFilterIterator
  *
  * @author Florian Matthew <florin.gligor@reea.net>
  */
-class FileContentFilterIterator extends FilterIterator{
+class FileContentFilterIterator extends \FilterIterator{
     
     private $textIncluded = array();
     
@@ -22,18 +22,26 @@ class FileContentFilterIterator extends FilterIterator{
     /**
      * 
      * @param \Iterator $iterator
-     * @param type $excluded
      * @param type $included
+     * @param type $excluded
      */
-    function __construct(\Iterator $iterator, $included = array(), $excluded = array()) {
+    function __construct(\Iterator $iterator, array $included, array $excluded = array()) {
+        foreach ($included as $include){
+            $this->textIncluded[] = $include;
+        }
+        
+        if(NULL !== $excluded){
+            foreach ($excluded as $exclue){
+                $this->textExcluded[] = $exclude;
+            }
+        }
+        
         parent::__construct($iterator);
-        $this->textIncluded = $included;
-        $this->textExcluded = $excluded;
     }
     
     public function accept() {
         
-        if(NULL == $this->textIncluded || NULL == $this->textExcluded){
+        if(NULL == $this->textIncluded){
             return true;
         }
         
@@ -43,16 +51,16 @@ class FileContentFilterIterator extends FilterIterator{
             return false;
         }
 
-        $file_content = $file->getContents();
+        $file_content = $file->getFileContent();
         
         if(NULL === $file_content) return false;
         
         foreach ($this->textIncluded as $text){
-            if(! preg_match($text, $file_content)) return false;
+            if(! preg_match("/".$text."/", $file_content)) return false;
         }
         
         foreach ($this->textExcluded as $text){
-            if(! preg_match($text, $file_content)) return false;
+            if(! preg_match("/".$text."/", $file_content)) return false;
         }
         
         return true;

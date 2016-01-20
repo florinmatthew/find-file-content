@@ -225,10 +225,8 @@ class FindInFiles {
     public function startSearch(){
         foreach ($this->drivers as $driver){
             $newDriver = $this->makeDriver($driver);
-            echo "<pre>";
-            var_dump($newDriver->search());
-            echo "</pre>";
-            die((__LINE__ -2) . __FILE__);
+            
+            $newDriver->search();
             
         }
         /*...*/

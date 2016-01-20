@@ -31,7 +31,7 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
         );
         
         if(NULL !== $this->settings['textIncluded'] || NULL !== $this->settings['textExcluded']){
-            $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textExcluded'], $this->settings['textIncluded']);
+            $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textIncluded'], $this->settings['textExcluded']);
         }
         
         return $iterator;

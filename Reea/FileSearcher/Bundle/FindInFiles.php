@@ -12,7 +12,7 @@ use Reea\FileSearcher\Bundle\Helpers\SortHelper;
 use Reea\FileSearcher\Bundle\Registry\Drivers;
 use Reea\FileSearcher\Bundle\Helpers\OSystem;
 /**
- * Description of FindFile
+ * Description of FindInFiles
  *
  * @author Florian Matthew <florin.gligor@reea.net>
  */
@@ -60,17 +60,23 @@ class FindInFiles {
     /**
      * @var type 
      */
-    private $ignoredFolders = array();
+    private $ignoredFolders;
     
     /**
      * @var String 
      */
-    private $matchRegex;
+    private $pattern;
     
     /**
      * @var bool 
      */
     private $skipUnreadable = 1;
+    
+    private $mode = 1;
+    
+    private static $modes = [
+        1 => 'files', 2 => 'dirs'
+    ];
     
     protected static $excludedFolders = ['.git', '.svn', 'nbproject'];
 
@@ -112,7 +118,15 @@ class FindInFiles {
         return $this;
     }
     
-    /**
+    public function setMode($int){
+        if(array_key_exists($int, self::$modes)){
+            $this->mode = $int;
+        }
+        
+        return $this;
+    }
+
+        /**
      * Make the driver
      * @param DriverInterface $driver
      * @return DriverInterface
@@ -123,10 +137,11 @@ class FindInFiles {
             'textIncluded'  => $this->textIncluded,
             'textExcluded'  => $this->textExcluded,
             'sort'          => SortHelper::getSortVal($this->sort),
-            'matches_regex' => $this->matchRegex,
+            'matches_regex' => $this->pattern,
             'filters'       => $this->filters,
             'ignoredFolders'=> $this->ignoredFolders,
-            'skipUnreadable'=> $this->skipUnreadable
+            'skipUnreadable'=> $this->skipUnreadable,
+            'mode'          => $this->mode
         ];
         
         $newDriver = $driver->setPath($this->path)
@@ -144,6 +159,10 @@ class FindInFiles {
         $this->path = $path;
         
         return $this;
+    }
+    
+    public function getPath(){
+        return $this->path;
     }
     
     /**
@@ -180,12 +199,12 @@ class FindInFiles {
     }
 
     /**
-     * Path matches regex.
-     * @param String $regex
+     * File name pattern. Ex.: php, js, yml etc.
+     * @param String $pattern
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
-    public function setMatchesRegex($regex){
-        $this->matchRegex = $regex;
+    public function setNamePattern($pattern){
+        $this->pattern = $pattern;
         
         return $this;
     }

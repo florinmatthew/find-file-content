@@ -29,7 +29,7 @@ class SorterIterator implements \IteratorAggregate{
         
         $this->iterator = $iterator;
         
-        if(is_callable($$by)){
+        if(is_callable($by)){
             $this->sort = $by;
         }else{
             if(FALSE === SortHelper::getCallable($by)){

@@ -15,6 +15,7 @@ class Drivers {
     
     private $drivers = [
         'Reea\\FileSearcher\\Bundle\\Drivers\\DefaultDriver',
+        'Reea\\FileSearcher\\Bundle\\Drivers\\GnuCommandDriver'
     ];
     
     /**

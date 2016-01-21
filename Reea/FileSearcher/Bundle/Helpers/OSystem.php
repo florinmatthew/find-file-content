@@ -15,6 +15,8 @@ namespace Reea\FileSearcher\Bundle\Helpers;
  */
 class OSystem {
     
+    static $DEFAULT_COMMAND = "which ";
+    
     private static $os_names = [
         1 => 'linux', 2 => 'win', 3 => 'darwin', 4 => 'bsd'
     ];
@@ -43,6 +45,25 @@ class OSystem {
      */
     public static function getName($id){
         return self::$os_names[$id];
+    }
+    
+    
+    public function makeTest($command){
+//        
+        if (FALSE === function_exists('exec')) {
+            return false;
+        }
+
+        $baseCommand = static::$DEFAULT_COMMAND;
+        
+        if ($this->getType() === 2) {
+            $baseCommand = 'where ';
+        }
+
+        $command = escapeshellcmd($command);
+        exec($baseCommand.$command, $output, $code);
+
+        return 0 === $code && count($output) > 0;
     }
     
 }

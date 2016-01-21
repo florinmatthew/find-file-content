@@ -51,8 +51,6 @@ class SearchSettings {
         foreach (self::$settings as $name=> $setting){
             if(TRUE === $setting['required']){
                 if(! array_key_exists($name, $settings) || (array_key_exists($name, $settings) && NULL == $settings[$name])){
-                    echo $name;
-                    die($settings[$name]);
                     throw new InvalidTermsException();
                 }
             }

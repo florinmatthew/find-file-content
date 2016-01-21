@@ -20,8 +20,8 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
     private $rewindable;
     
     function __construct($path, $skipUnreadable) {
-        $this->skipUnreadable = $skipUnreadable;
         parent::__construct($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $this->skipUnreadable = $skipUnreadable;
     }
     
     public function getChildren() {
@@ -55,7 +55,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
         if (null !== $this->rewindable) {
             return $this->rewindable;
         }
-
+        
         $openDir = @opendir($this->getPath());
         
         if (FALSE !== $openDir) {
@@ -71,7 +71,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator{
     }
     
     public function current() {
-        $FileInfo = new FileInfo(parent::current()->getPathname());
+        $FileInfo = new FileInfo(parent::current()->getPathname(), $this->getSubPath(), $this->getSubPathname());
         return $FileInfo;
     }
     

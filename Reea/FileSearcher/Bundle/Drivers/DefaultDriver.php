@@ -16,7 +16,7 @@ use Reea\FileSearcher\Bundle\Helpers\SortHelper;
  */
 class DefaultDriver extends AbstractDriver implements DriverInterface{
     
-    private static $name = "default";
+    private static $id = "default";
     
     private $enabled = true;
     
@@ -34,6 +34,15 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
             $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textIncluded'], $this->settings['textExcluded']);
         }
         
+        if(NULL !== $this->settings['ignoredFolders']){
+            $iterator = new I\IgnoredFoldersIterator($iterator, $this->settings['ignoredFolders']);
+        }
+        
+        if(NULL !== $this->settings['sort']){
+            $iterator = new I\SorterIterator($iterator, $this->settings['sort']);
+            $iterator = $iterator->getIterator();
+        }
+        
         return $iterator;
     }
     
@@ -41,7 +50,7 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
      * {@inheritdoc}
      */
     public function getId() {
-        return static::$name;
+        return static::$id;
     }
     
     /**

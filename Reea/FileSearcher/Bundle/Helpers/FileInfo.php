@@ -15,8 +15,15 @@ namespace Reea\FileSearcher\Bundle\Helpers;
  */
 class FileInfo extends \SplFileInfo{
     
-    function __construct($file) {
+    private $subPath;
+    
+    private $subPathName;
+    
+    function __construct($file, $subPath, $subPathName) {
         parent::__construct($file);
+        
+        $this->subPath = $subPath;
+        $this->subPathName = $subPathName;
     }
     
     public function getFileContent() {
@@ -28,6 +35,14 @@ class FileInfo extends \SplFileInfo{
         }
 
         return $content;
+    }
+    
+    public function getSubpath() {
+        return $this->subPath;
+    }
+    
+    public function getSubpathName() {
+        return $this->subPathName;
     }
     
 }

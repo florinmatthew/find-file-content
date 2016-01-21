@@ -16,8 +16,8 @@ class FileFilterIterator extends \FilterIterator{
     private $filters = array();
     
     function __construct(\Iterator $iterator, $filters = array()) {
-        parent::__construct($iterator);
         $this->filters = $filters;
+        parent::__construct($iterator);
     }
     
     public function accept() {

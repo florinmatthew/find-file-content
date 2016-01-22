@@ -129,7 +129,6 @@ class FindInFiles {
             'sort'          => SortHelper::getSortVal($this->sort),
             'matches_regex' => $this->pattern,
             'filters'       => $this->filters,
-            'ignoredFolders'=> $this->ignoredFolders,
             'skipUnreadable'=> $this->skipUnreadable,
             'mode'          => $this->mode
         ];
@@ -210,17 +209,6 @@ class FindInFiles {
         return $this;
     }
 
-    /**
-     * 
-     * @param array $ignored
-     * @return \Reea\FileSearcher\Bundle\FindInFiles
-     */
-    public function setIgnoredFolders(array $ignored) {
-        $this->ignoredFolders = $ignored;
-        
-        return $this;
-    }
-    
     /**
      * Include unreadable folders in search.
      * @return \Reea\FileSearcher\Bundle\FindInFiles

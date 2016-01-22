@@ -25,11 +25,6 @@ class FindInFiles {
     /**
      * @var type 
      */
-    protected $walker;
-    
-    /**
-     * @var type 
-     */
     private $result;
     
     /**
@@ -56,11 +51,6 @@ class FindInFiles {
      * @var type 
      */
     private $filters = array();
-    
-    /**
-     * @var type 
-     */
-    private $ignoredFolders;
     
     /**
      * @var String 

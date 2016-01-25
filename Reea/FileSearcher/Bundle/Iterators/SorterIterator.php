@@ -32,10 +32,10 @@ class SorterIterator implements \IteratorAggregate{
         if(is_callable($by)){
             $this->sort = $by;
         }else{
-            if(FALSE === SortHelper::getCallable($by)){
+            if(FALSE === SortHelper::getCallable(SortHelper::getSortVal($by))){
                 throw new Reea\FileSearcher\Bundle\Exceptions\InvalidSortArgumentException();
             }
-            $this->sort = SortHelper::getCallable($by);
+            $this->sort = SortHelper::getCallable(SortHelper::getSortVal($by));
         }
     }
     

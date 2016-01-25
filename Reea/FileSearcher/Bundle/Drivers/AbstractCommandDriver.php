@@ -9,6 +9,7 @@
 namespace Reea\FileSearcher\Bundle\Drivers;
 use Reea\FileSearcher\Bundle\Helpers\OSystem;
 use Reea\FileSearcher\Bundle\Helpers\CommandBuilder;
+use Reea\FileSearcher\Bundle\Helpers\SortHelper;
 /**
  * Description of AbstractCommandDriver
  *
@@ -29,18 +30,19 @@ abstract class AbstractCommandDriver extends AbstractDriver{
         
         $this->builder->create($this->path);
         $this->builder->addMode($this->settings['mode']);
+        if(isset($this->settings['sort']) && $this->settings['sort'] !== NULL){
+            $this->sort($this->builder, SortHelper::getSortVal($this->settings['sort']));
+        }
+        $this->makeIncludedText($this->builder, $this->settings['textIncluded']);
+        
         $command = implode(" ", $this->builder->getCommandString());
-        
-        echo "<pre>";
-        var_dump($command);
-        echo "</pre>";
-        die(__LINE__ . __FILE__);
-        
-        $this->makeIncludedText($this->builder, $this->settings['includedText']);
-        
+        echo $command."<br />";
         exec($command, $out, $var);
         
-        
+        echo "<pre>";
+        var_dump($out);
+        echo "</pre>";
+        die(__LINE__ . __FILE__);
         
         $this->o_systems->makeTest('find');
     }
@@ -51,7 +53,9 @@ abstract class AbstractCommandDriver extends AbstractDriver{
      * @param type $included
      */
     protected function makeIncludedText(CommandBuilder $builder, $included){
-        
+        $builder->push('| xargs grep -r "'.$included.'"');
     }
+    
+    abstract function sort(CommandBuilder $builder, $sort);
     
 }

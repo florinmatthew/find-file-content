@@ -24,6 +24,14 @@ class SortHelper {
     ];
     
     /**
+     * Comamnd based sort.
+     * @var type 
+     */
+    protected static $gnuSort = [
+        1 => '| sort', 2 => '%A@ %h/%f\\n', 3 => '%C@ %h/%f\\n'
+    ];
+    
+    /**
      * Get sorter int value by name.
      * @param String $name
      * @return mixed
@@ -33,7 +41,6 @@ class SortHelper {
         
         if(! array_key_exists($name, $sorter)){
             throw new Reea\FileSearcher\Bundle\Exceptions\InvalidSortArgumentException();
-            
         }
         
         return $sorter[$name];
@@ -70,6 +77,15 @@ class SortHelper {
         return function($a, $b){
             return ($a->getCTime() - $b->getCTime());
         };
+    }
+    
+    /**
+     * 
+     * @param type $int
+     * @return type
+     */
+    public static function getGnuSort($int){
+        return self::$gnuSort[$int];
     }
     
 }

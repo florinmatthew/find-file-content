@@ -15,9 +15,9 @@ namespace Reea\FileSearcher\Bundle\Iterators;
  */
 class FileContentFilterIterator extends \FilterIterator{
     
-    private $textIncluded = array();
+    private $textIncluded;
     
-    private $textExcluded = array();
+    private $textExcluded;
     
     /**
      * 
@@ -25,15 +25,12 @@ class FileContentFilterIterator extends \FilterIterator{
      * @param type $included
      * @param type $excluded
      */
-    function __construct(\Iterator $iterator, array $included, array $excluded = array()) {
-        foreach ($included as $include){
-            $this->textIncluded[] = $include;
-        }
+    function __construct(\Iterator $iterator, $included, $excluded = "") {
+        
+        $this->textIncluded = $included;
         
         if(NULL !== $excluded){
-            foreach ($excluded as $exclue){
-                $this->textExcluded[] = $exclude;
-            }
+            $this->textExcluded = $excluded;
         }
         
         parent::__construct($iterator);
@@ -55,13 +52,7 @@ class FileContentFilterIterator extends \FilterIterator{
         
         if(NULL === $file_content) return false;
         
-        foreach ($this->textIncluded as $text){
-            if(! preg_match("/".$text."/", $file_content)) return false;
-        }
-        
-        foreach ($this->textExcluded as $text){
-            if(! preg_match("/".$text."/", $file_content)) return false;
-        }
+        if(! preg_match("/".$this->textIncluded."/", $file_content)) return false;
         
         return true;
         

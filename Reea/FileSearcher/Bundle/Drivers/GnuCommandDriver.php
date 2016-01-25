@@ -8,6 +8,7 @@
 
 namespace Reea\FileSearcher\Bundle\Drivers;
 use Reea\FileSearcher\Bundle\Drivers\Lib\Types\DriverInterface;
+use \Reea\FileSearcher\Bundle\Helpers\SortHelper;
 /**
  * Description of GnuCommandDriver
  *
@@ -26,6 +27,12 @@ class GnuCommandDriver extends AbstractCommandDriver implements DriverInterface{
     
     public function isEnabled(){
         return $this->o_systems->getType() === 1;
+    }
+    
+    public function sort(\Reea\FileSearcher\Bundle\Helpers\CommandBuilder $builder, $sort) {
+        $builder->push('-printf')
+                ->addArgs(SortHelper::getGnuSort($sort))
+                ->push('| sort');
     }
     
 }

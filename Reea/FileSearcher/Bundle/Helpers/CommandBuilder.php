@@ -47,7 +47,6 @@ class CommandBuilder {
         return $this;
     }
 
-
     /**
      * 
      * @param type $string
@@ -59,6 +58,17 @@ class CommandBuilder {
         return $this;
     }
     
+    /**
+     * 
+     * @param type $args
+     */
+    public function addArgs($args){
+        $this->command[] = escapeshellarg($args);
+        
+        return $this;
+    }
+
+
     public function getCommandString(){
         return $this->command;
     }

@@ -30,15 +30,11 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
             \RecursiveIteratorIterator::SELF_FIRST
         );
         
-        if(NULL !== $this->settings['textIncluded'] || NULL !== $this->settings['textExcluded']){
-            $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textIncluded'], $this->settings['textExcluded']);
+        if(isset($this->settings['textIncluded']) && NULL !== $this->settings['textIncluded']){
+            $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textIncluded'], "");
         }
         
-        if(NULL !== $this->settings['ignoredFolders']){
-            $iterator = new I\IgnoredFoldersIterator($iterator, $this->settings['ignoredFolders']);
-        }
-        
-        if(NULL !== $this->settings['sort']){
+        if(isset($this->settings['sort']) && NULL !== $this->settings['sort']){
             $iterator = new I\SorterIterator($iterator, $this->settings['sort']);
             $iterator = $iterator->getIterator();
         }

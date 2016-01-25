@@ -35,12 +35,7 @@ class FindInFiles {
     /**
      * @var Array
      */
-    private $textIncluded = array();
-    
-    /**
-     * @var Array
-     */
-    private $textExcluded = array();
+    private $textIncluded;
     
     /**
      * @var type 
@@ -51,11 +46,6 @@ class FindInFiles {
      * @var type 
      */
     private $filters = array();
-    
-    /**
-     * @var String 
-     */
-    private $pattern;
     
     /**
      * @var bool 
@@ -125,9 +115,7 @@ class FindInFiles {
         
         $settings = [
             'textIncluded'  => $this->textIncluded,
-            'textExcluded'  => $this->textExcluded,
-            'sort'          => SortHelper::getSortVal($this->sort),
-            'matches_regex' => $this->pattern,
+            'sort'          => $this->sort,
             'filters'       => $this->filters,
             'skipUnreadable'=> $this->skipUnreadable,
             'mode'          => $this->mode
@@ -156,22 +144,11 @@ class FindInFiles {
     
     /**
      * Set text to be included. Give me all files where these texts are present.
-     * @param array $textIncluded
+     * @param string $textIncluded
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
-    public function setTextIncluded(array $textIncluded) {
+    public function setTextIncluded($textIncluded) {
         $this->textIncluded = $textIncluded;
-        
-        return $this;
-    }
-    
-    /**
-     * Set text to be excluded. (Give me all files where these texts are missing)
-     * @param array $textExcluded
-     * @return \Reea\FileSearcher\Bundle\FindInFiles
-     */
-    public function setTextExcluded(array $textExcluded) {
-        $this->textIncluded = $textExcluded;
         
         return $this;
     }
@@ -187,17 +164,6 @@ class FindInFiles {
         return $this;
     }
 
-    /**
-     * File name pattern. Ex.: php, js, yml etc.
-     * @param String $pattern
-     * @return \Reea\FileSearcher\Bundle\FindInFiles
-     */
-    public function setNamePattern($pattern){
-        $this->pattern = $pattern;
-        
-        return $this;
-    }
-    
     /**
      * 
      * @param array $filters

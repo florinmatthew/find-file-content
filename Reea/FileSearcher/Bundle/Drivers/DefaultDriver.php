@@ -34,10 +34,19 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
             $iterator = new I\FileContentFilterIterator($iterator, $this->settings['textIncluded'], "");
         }
         
+        if(isset($this->settings['filters']) && NULL !== $this->settings['filters']){
+            $iterator = new I\FileExtensionIterator($iterator, $this->settings['filters']);
+        }
+        
         if(isset($this->settings['sort']) && NULL !== $this->settings['sort']){
             $iterator = new I\SorterIterator($iterator, $this->settings['sort']);
             $iterator = $iterator->getIterator();
         }
+        
+        echo "<pre>";
+        var_dump($iterator);
+        echo "</pre>";
+        die(__LINE__ . __FILE__);
         
         return $iterator;
     }

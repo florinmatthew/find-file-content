@@ -31,7 +31,7 @@ abstract class AbstractCommandDriver extends AbstractDriver{
         $this->builder->create($this->path);
         $this->builder->addMode($this->settings['mode']);
         if(isset($this->settings['sort']) && $this->settings['sort'] !== NULL){
-            $this->sort($this->builder, SortHelper::getSortVal($this->settings['sort']));
+            $this->sort($this->builder, $this->settings['sort']);
         }
         $this->makeIncludedText($this->builder, $this->settings['textIncluded']);
         

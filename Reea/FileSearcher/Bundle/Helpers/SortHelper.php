@@ -28,7 +28,7 @@ class SortHelper {
      * @var type 
      */
     protected static $gnuSort = [
-        1 => '| sort', 2 => '%A@ %h/%f\\n', 3 => '%C@ %h/%f\\n'
+        1 => '', 2 => '%A@ %h/%f\\n', 3 => '%C@ %h/%f\\n'
     ];
     
     /**

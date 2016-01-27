@@ -19,6 +19,8 @@ class GnuCommandDriver extends AbstractCommandDriver implements DriverInterface{
     
     private static $id = "gnu_command";
     
+    private static $system_id = 1;
+    
     /**
      * { @inheritdoc }
      */
@@ -27,7 +29,7 @@ class GnuCommandDriver extends AbstractCommandDriver implements DriverInterface{
     }
     
     public function isEnabled(){
-        return $this->o_systems->getType() === 1;
+        return $this->o_systems->getType() === self::$system_id;
     }
     
     public function sort(CommandBuilder $builder, $sort) {

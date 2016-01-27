@@ -98,12 +98,21 @@ class FindInFiles {
         return $this;
     }
     
-    public function setMode($int){
-        if(array_key_exists($int, self::$modes)){
-            $this->mode = $int;
+    /**
+     * Set mode
+     * @param String $mode Values 'files', 'dirs'
+     * @return \Reea\FileSearcher\Bundle\FindInFiles
+     */
+    public function setMode($mode){
+        
+        foreach (self::$modes as $key=>$modeString){
+            if($modeString === $mode){
+                $this->mode = $key;
+                return $this;
+            }
         }
         
-        return $this;
+        throw new \InvalidArgumentException();
     }
 
         /**

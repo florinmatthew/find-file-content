@@ -28,19 +28,34 @@ class GnuCommandDriver extends AbstractCommandDriver implements DriverInterface{
         return self::$id;
     }
     
+    /**
+     * { @inheritdoc }
+     */
     public function isEnabled(){
         return $this->o_systems->getType() === self::$system_id;
     }
     
+    /**
+     * { @inheritdoc }
+     */
     public function sort(CommandBuilder $builder, $sort) {
         
         if("name" !== $sort){
             $builder->push('-printf');
             $builder->addArgs(SortHelper::getGnuSort(SortHelper::getSortVal($sort)));
         }
-        // >arg('-d ')
+            // >arg('-d ')
             // ->arg('-f2-')
         $builder->push('| sort -r');
+    }
+    
+    public function filters(CommandBuilder $builder, array $filters) {
+        for($i=0; $i <= count($filters)-1; $i++){
+            $builder->push('-iname')->addArgs($filters[$i]);
+            if($i < count($filters)-1){
+                $builder->push('-o');
+            }
+        }
     }
     
 }

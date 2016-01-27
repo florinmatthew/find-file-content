@@ -18,7 +18,7 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
     
     private static $id = "default";
     
-    private $enabled = true;
+    private $enabled = false;
     
     /**
      * {@inheritdoc}

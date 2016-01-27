@@ -30,6 +30,9 @@ abstract class AbstractCommandDriver extends AbstractDriver{
         
         $this->builder->create($this->path);
         $this->builder->addMode($this->settings['mode']);
+        if(isset($this->settings['filters']) && $this->settings['filters'] !== NULL){
+            $this->filters($this->builder, $this->settings['filters']);
+        }
         if(isset($this->settings['sort']) && $this->settings['sort'] !== NULL){
             $this->sort($this->builder, $this->settings['sort']);
         }
@@ -57,5 +60,7 @@ abstract class AbstractCommandDriver extends AbstractDriver{
     }
     
     abstract function sort(CommandBuilder $builder, $sort);
+    
+    abstract function filters(CommandBuilder $builder, array $filters);
     
 }

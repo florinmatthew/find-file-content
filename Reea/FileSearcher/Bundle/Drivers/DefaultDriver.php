@@ -43,11 +43,6 @@ class DefaultDriver extends AbstractDriver implements DriverInterface{
             $iterator = $iterator->getIterator();
         }
         
-        echo "<pre>";
-        var_dump($iterator);
-        echo "</pre>";
-        die(__LINE__ . __FILE__);
-        
         return $iterator;
     }
     

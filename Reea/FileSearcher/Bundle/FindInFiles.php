@@ -50,7 +50,7 @@ class FindInFiles {
     /**
      * @var bool 
      */
-    private $skipUnreadable = 1;
+    private $skipUnreadable = true;
     
     private $mode = 1;
     
@@ -91,7 +91,7 @@ class FindInFiles {
     public function appendDriver(DriverInterface $driver){
         
         if(array_key_exists($driver->getId(), $this->drivers)){
-            throw new Reea\FileSearcher\Bundle\Exceptions\DuplicateDriverException();
+            throw new \Reea\FileSearcher\Bundle\Exceptions\DuplicateDriverException();
         }
         $this->drivers[$driver->getId()] = $driver;
         
@@ -189,9 +189,17 @@ class FindInFiles {
      * @return \Reea\FileSearcher\Bundle\FindInFiles
      */
     public function setUnreadable(){
-        $this->skipUnreadable = 0;
+        $this->skipUnreadable = false;
         
         return $this;
+    }
+    
+    /**
+     * Get the state for ignoring unreadable folders.
+     * @return Bool True if unreadable folders are skipped in search process. False otherwise. Default value if setUnreadable() has never been used is TRUE.  
+     */
+    public function getUnreadableState(){
+        return $this->skipUnreadable;
     }
 
     public function startSearch(){
